@@ -23,12 +23,9 @@ test.only('purchase an item', async ({ page }) => {
 
     console.log(`Price: ${expectedPrice} Name:${expectedName} Description: ${expectedDescription}`)
 
-    // se agrega al carrito y se da click al carrito de compras
     await randomItem.getByRole('button', { name: 'Add to cart' }).click()
     await page.locator('a.shopping_cart_link').click()
-    //await page.pause()
-
-    //Que sea visible el boton Checkout
+   
     expect(page.getByRole('button', {name: 'checkout'})).toBeVisible
 
     const actualName = await page.locator('.inventory_item_name').innerText()
@@ -40,18 +37,17 @@ test.only('purchase an item', async ({ page }) => {
     expect(actualPrice).toEqual(expectedPrice)
 
     await page.getByRole('button', {name: 'checkout'}).click()
-    //seccion de checkAut
+    
     await page.locator('[data-test="firstName"]').fill('Alejandra')
     await page.locator('[data-test="lastName"]').fill('Glez')
     await page.locator('[data-test="postalCode"]').fill('98672')
 
-    //click en los botones
+   
     await page.getByRole('button', { name: 'Continue' }).click()
     await page.getByRole('button', { name: 'Finish' }).click()
 
     await page.pause()
 
-    //Que sea visible el texto
     await expect(page.getByRole('heading', {name: 'Thank you for your order!'})).toBeVisible
 
 });
