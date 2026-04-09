@@ -1,14 +1,15 @@
 import { test, expect } from '@playwright/test'
-import { LoginPage } from './pageobjects/Loginpage'
+import { LoginPage } from './pageobjects/LoginPage'
 
-test.only('purchase an item', async ({ page }) => {
+test('purchase an item', async ({ page }) => {
     await page.goto('https://www.saucedemo.com/')
 
+    //Loggin con clase LoginPage
     const Logg = new LoginPage(page)
-    await Logg.fillUsername()
-    await Logg.fillPassword()
-    await Logg.clickOnLogin()
+    await Logg.loginWithCredentials('standard_user', 'secret_sauce')
+    await Logg.checkShoppingCartIcon()
 
+    
     const items = page.locator('#inventory_container .inventory_item')
     await expect(items.first()).toBeVisible()
 
@@ -55,3 +56,20 @@ test.only('purchase an item', async ({ page }) => {
     await expect(page.getByRole('heading', {name: 'Thank you for your order!'})).toBeVisible
 
 });
+
+test('purchase an item 1', async ({ page }) => {
+    await page.goto('https://www.saucedemo.com/')
+    //Loggin con clase LoginPage
+    const Logg = new LoginPage(page)
+    await Logg.loginWithCredentials('standard_user', 'secret_sauce')
+    await Logg.checkShoppingCartIcon()
+})
+
+//test.only('navigate', async ({ page }) => {
+//    await page.goto('process.env.URL')
+//    await page.pause()
+//    const Logg = new LoginPage(page)
+//    await Logg.fillUsername('standarduser')
+//    await Logg.fillPassword('secret_sauce')
+//    await Logg.clickOnLogin()
+

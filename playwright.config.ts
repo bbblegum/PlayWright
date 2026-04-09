@@ -6,7 +6,12 @@ import { defineConfig, devices } from '@playwright/test';
  */
 // import dotenv from 'dotenv';
 // import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
+//dotenv.config({ path: path.resolve(__dirname, '.env') });
+
+require('dotenv').config()
+{
+  path: `.env.${process.env.NODE_ENV ? process.env.NODE_ENV : 'dev'}`
+}
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -29,7 +34,10 @@ export default defineConfig({
     // baseURL: 'http://localhost:3000',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: 'on',
+    //Tomar screenshot y guardarlos en la carpeta screenshot
+    screenshot: 'on', 
+    video: 'on',
   },
 
   /* Configure projects for major browsers */
